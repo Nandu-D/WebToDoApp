@@ -81,12 +81,18 @@
 			console.log("In script");
 			document.querySelector('h2').hidden=true;
 			
+			let inputBox = document.querySelector('#name');
+			inputBox.addEventListener("keyup", saveTextInTextBox);
+			
+			const textBoxValueStoredKey="textBoxValueStoredKey";
+			var textBoxValue = document.querySelector('#name').value.trim();
+			
 			function addTodo(event) {
 				event.preventDefault();
 				console.log("In addTodo");			
 				const addTOElement = document.querySelector('#app');
 				const todoAdded = document.querySelector('#name').value.trim();
-				
+
 				if (todoAdded.length > 0) {
 					document.querySelector('h2').hidden=false;
 					const template = document.querySelector('#myTemplate');
@@ -116,6 +122,26 @@
 				}
 			}
 			
+			function saveTextInTextBox(event) {
+				if (event.isComposing || event.keyCode === 229) {
+					return;
+				}
+				event = (event) ? event : window.event;
+				var charCode = (event.which) ? event.which : event.keyCode;
+				if (charCode > 31 && (charCode < 65 || charCode > 90) && (charCode < 97 || charCode > 122)) {
+					return false;
+				}
+				
+				window.localStorage.setItem(textBoxValueStoredKey, document.querySelector('#name').value.trim());
+			}
+			
+			function getTextWhichWasInTextBox() {
+				if(window.localStorage.getItem(textBoxValueStoredKey) != null) {
+					var previousValue = window.localStorage.getItem(textBoxValueStoredKey);
+					document.querySelector('#name').value = previousValue;
+				}
+			}
+			
 			function getElementsFromLocalStorage() {
 					const addTOElement = document.querySelector('#app');
 					const template = document.querySelector('#myTemplate');
@@ -123,32 +149,35 @@
 					for (var i = localStorage.length - 1; i >= 0; i--) {
 				
 						var key = localStorage.key(i);
-						var value = localStorage.getItem(key);
-						
-						var newItem = document.importNode(template.content, true);
-						var newItemListItem = newItem.querySelector('#toAdd');
-						var newItemLabel = newItemListItem.querySelector('#tmplLabel');
-						var newItemCheckbox = newItemListItem.querySelector('#tmplCheckbox');	
+						if (key.localeCompare(textBoxValueStoredKey) != 0) {
+							var value = localStorage.getItem(key);
+							
+							var newItem = document.importNode(template.content, true);
+							var newItemListItem = newItem.querySelector('#toAdd');
+							var newItemLabel = newItemListItem.querySelector('#tmplLabel');
+							var newItemCheckbox = newItemListItem.querySelector('#tmplCheckbox');	
 
-						console.log('Key: ' + key + ', Value: ' + value);				
-						
-						var hash = (Date.now().toString(36).substr(2,4) + performance.now().toString().replace('.','').substr(0,4) +
-									Math.random().toString(36).substr(3,4)).toUpperCase();
-									
-						var listId = `toAdd-${hash}`;
-						newItemListItem.setAttribute('id', listId);
-						
-						newItemLabel.setAttribute('id', key);
-						
-						newItemLabel.textContent = value;
-						
-						
-						addTOElement.appendChild(newItem);
-						document.querySelector('h2').hidden=false;
-				}
+							console.log('Key: ' + key + ', Value: ' + value);				
+							
+							var hash = (Date.now().toString(36).substr(2,4) + performance.now().toString().replace('.','').substr(0,4) +
+										Math.random().toString(36).substr(3,4)).toUpperCase();
+										
+							var listId = `toAdd-${hash}`;
+							newItemListItem.setAttribute('id', listId);
+							
+							newItemLabel.setAttribute('id', key);
+							
+							newItemLabel.textContent = value;
+							
+							
+							addTOElement.appendChild(newItem);
+							document.querySelector('h2').hidden=false;
+						}
+					}
 			}
 			
 			getElementsFromLocalStorage();
+			getTextWhichWasInTextBox();
 		</script>
 	</body>
 </html>
