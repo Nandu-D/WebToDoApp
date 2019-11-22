@@ -117,36 +117,35 @@
 			}
 			
 			function getElementsFromLocalStorage() {
-			const addTOElement = document.querySelector('#app');
-			const template = document.querySelector('#myTemplate');
-				  const newItem = document.importNode(template.content, true);
-				  const newItemListItem = newItem.querySelector('#toAdd');
-				  const newItemLabel = newItemListItem.querySelector('#tmplLabel');
-				  const newItemCheckbox = newItemListItem.querySelector('#tmplCheckbox');	
-				for (var i = 0; i < localStorage.length; i++) {
+					const addTOElement = document.querySelector('#app');
+					const template = document.querySelector('#myTemplate');
+					
+					for (var i = localStorage.length - 1; i >= 0; i--) {
 				
-				  var key = localStorage.key(i);
-				  var value = localStorage.getItem(key);
+						var key = localStorage.key(i);
+						var value = localStorage.getItem(key);
+						
+						var newItem = document.importNode(template.content, true);
+						var newItemListItem = newItem.querySelector('#toAdd');
+						var newItemLabel = newItemListItem.querySelector('#tmplLabel');
+						var newItemCheckbox = newItemListItem.querySelector('#tmplCheckbox');	
 
-				  console.log('Key: ' + key + ', Value: ' + value);
-
-				  var hash = (Date.now().toString(36).substr(2,4) + performance.now().toString().replace('.','').substr(0,4) +
+						console.log('Key: ' + key + ', Value: ' + value);				
+						
+						var hash = (Date.now().toString(36).substr(2,4) + performance.now().toString().replace('.','').substr(0,4) +
 									Math.random().toString(36).substr(3,4)).toUpperCase();
 									
-					var listId = `toAdd-${hash}`;
-					newItemListItem.setAttribute('id', listId);
-					
-					
-					newItemLabel.setAttribute('id', key);
-					
-					newItemLabel.textContent = value;
-					
-					
-					addTOElement.appendChild(newItem);
-document.querySelector('h2').hidden=false;
+						var listId = `toAdd-${hash}`;
+						newItemListItem.setAttribute('id', listId);
+						
+						newItemLabel.setAttribute('id', key);
+						
+						newItemLabel.textContent = value;
+						
+						
+						addTOElement.appendChild(newItem);
+						document.querySelector('h2').hidden=false;
 				}
-					
-				
 			}
 			
 			getElementsFromLocalStorage();
