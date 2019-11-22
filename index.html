@@ -124,6 +124,7 @@
 				  const newItemLabel = newItemListItem.querySelector('#tmplLabel');
 				  const newItemCheckbox = newItemListItem.querySelector('#tmplCheckbox');	
 				for (var i = 0; i < localStorage.length; i++) {
+				
 				  var key = localStorage.key(i);
 				  var value = localStorage.getItem(key);
 
@@ -133,7 +134,7 @@
 									Math.random().toString(36).substr(3,4)).toUpperCase();
 									
 					var listId = `toAdd-${hash}`;
-					newItemListItem.setAttribute('id', listId)
+					newItemListItem.setAttribute('id', listId);
 					
 					
 					newItemLabel.setAttribute('id', key);
