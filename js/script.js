@@ -49,6 +49,9 @@ function addTodo(event) {
 
         window.localStorage.setItem(labelId, todoAdded);
     }
+    if (window.localStorage.getItem(textBoxValueStoredKey) != null) {
+        window.localStorage.removeItem(textBoxValueStoredKey);
+    }
 }
 
 function saveTextInTextBox(event) {
