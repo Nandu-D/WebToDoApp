@@ -110,3 +110,23 @@ function getElementsFromLocalStorage() {
 
 getElementsFromLocalStorage();
 getTextWhichWasInTextBox();
+
+let list = document.querySelector('#app');
+
+    list.onclick = function(event) {
+      let target = event.target;
+
+      while (target != this) {
+        if (target.id == 'delete') {
+        	var parent1 = target.parentNode;
+		window.localStorage.removeItem(parent1.childNodes[1].id);
+		var parent2 = parent1.parentNode;
+		parent2.removeChild(parent1);
+		if(localStorage.length == 0) {
+			document.querySelector('h2').hidden = true;
+		}
+          	return;
+        }
+        target = target.parentNode;
+      }
+    }
