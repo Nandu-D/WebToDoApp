@@ -9,14 +9,27 @@
 		<title>TO-DO App</title>
 		<!-- <link rel="stylesheet" type="text/css" href="css/styles.css"> -->
 		<style>
+:root {
+	--main-content-text: ' ';
+}
+.title {
+	background-color: var(--title-bg);	
+}
+[title-weight="high"] {
+	--title-bg: #ffffff;
+}
+[title-weight="low"] {
+	--title-bg: #ffffcc;	
+}
+
 			header {
     text-align: center;
 }
 header::before {
-    content: ' ';
+    content: var(--main-content-text);
 }
 header::after {
-    content: ' ';
+    content: var(--main-content-text, ' ');
 }
 body {
     margin:0;
@@ -96,7 +109,6 @@ li {
     width: 100%;
   }
 }
-
 h2 {
 	opacity:1;
 	transform: opacity 1s ease-in-out;
@@ -125,14 +137,14 @@ h2:hover {
 	</head>
 	<body>
 		<header>
-			<h1>To-Do App</h1>
+			<h1 title-weight="high" class="title">To-Do App</h1>
 		</header>
 		<main>
 			<form action="/" method="get" id="add-item">
 				<label>Add a To-do: <input type='text' id='name'></label>
 				<input type="submit" id="new" value="Add">
 			</form>
-			<h2>Your to-do list</h2>
+			<h2 title-weight="low" class="title">Your to-do list</h2>
 			<form action="/" method="get" id="itemList">
                 <ul id="app"></ul>
 			</form>
