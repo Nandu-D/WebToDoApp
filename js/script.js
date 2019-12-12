@@ -4,6 +4,18 @@ if ('serviceWorker' in navigator) {
      });
  }
 
+ window.addEventListener('online', (event) => {
+    var title = document.querySelector('.title');
+    title.innerHTML = "To-Do App"; 
+    console.log("online");
+});
+
+window.addEventListener('offline', (event) => {
+    var title = document.querySelector('.title');
+    title.innerHTML = title.innerHTML + " - Offline"; 
+    console.log("offline");
+});
+
 
 let btn = document.querySelector('#new');
 btn.addEventListener('click', addTodo, false);
