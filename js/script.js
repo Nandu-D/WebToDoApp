@@ -19,7 +19,6 @@ window.addEventListener('offline', (event) => {
 
 let btn = document.querySelector('#new');
 btn.addEventListener('click', addTodo, false);
-console.log("In script");
 document.querySelector('h2').hidden = true;
 
 let inputBox = document.querySelector('#name');
